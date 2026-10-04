@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spongepowered:spongeapi:8.3.0-SNAPSHOT")
+    compileOnly("org.spongepowered:spongeapi:17.0.0")
     implementation("dev.faststats.metrics:sponge:0.30.2")
 }
 
