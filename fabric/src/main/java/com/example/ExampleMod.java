@@ -15,6 +15,7 @@ public class ExampleMod implements ModInitializer {
             "example-mod", // your mod id as defined in fabric.mod.json
             "YOUR_TOKEN_HERE"
     )
+            .requireConsent() // Require explicit user consent, this will open the consent screen on first start
             // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
             .metrics(factory -> factory
                     // Custom metrics require a corresponding data source in your project settings

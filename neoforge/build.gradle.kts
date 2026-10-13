@@ -3,7 +3,7 @@ plugins {
 }
 
 neoForge {
-    version = "26.1.2.76"
+    version = "26.3.0.77"
 }
 
 configurations.configureEach {
@@ -11,6 +11,6 @@ configurations.configureEach {
 }
 
 dependencies {
-    implementation("dev.faststats.metrics:neoforge:0.30.2+mc26.1-26.2")
-    jarJar("dev.faststats.metrics:neoforge:0.30.2+mc26.1-26.2")
+    implementation("dev.faststats.metrics:neoforge:0.31.0-pre2+mc26.3")
+    jarJar("dev.faststats.metrics:neoforge:0.31.0-pre2+mc26.3")
 }

@@ -7,6 +7,7 @@ subprojects {
     repositories {
         mavenCentral()
         maven("https://repo.faststats.dev/releases/")
+        maven("https://repo.faststats.dev/snapshots/") // only required for pre-releases
     }
 
     apply {
