@@ -10,7 +10,7 @@ tasks.compileJava {
 
 dependencies {
     implementation("net.minestom:minestom:2026.10.07-26.2")
-    implementation("dev.faststats.metrics:minestom:0.30.2")
+    implementation("dev.faststats.metrics:minestom:0.31.0-pre2")
 }
 
 tasks.shadowJar {

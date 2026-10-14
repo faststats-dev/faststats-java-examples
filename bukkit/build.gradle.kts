@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:26.2.build.+")
-    implementation("dev.faststats.metrics:bukkit:0.30.2")
+    implementation("dev.faststats.metrics:bukkit:0.31.0-pre2")
 }
 
 tasks.shadowJar {
