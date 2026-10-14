@@ -7,13 +7,18 @@ import dev.faststats.SimpleContext;
 
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.AccessDeniedException;
+import java.util.Arrays;
 
 public final class ErrorTrackerExample {
     // Context-aware: automatically tracks uncaught errors from the same class loader
     public static final ErrorTracker CONTEXT_AWARE = ErrorTracker.contextAware()
             // Filter expected noise before it is submitted
             .ignoreError(InvocationTargetException.class, "Expected .* but got .*")
-            .ignoreError(AccessDeniedException.class);
+            .ignoreError(AccessDeniedException.class)
+            // Optionally add custom error exclusion rules
+            // example: only track errors that pass your own package
+            .addExclusionRule((thread, error) -> Arrays.stream(error.getStackTrace())
+                    .noneMatch(e -> e.getClassName().startsWith("your.package.name")));
 
     // Context-unaware: only tracks errors passed to trackError() manually
     public static final ErrorTracker CONTEXT_UNAWARE = ErrorTracker.contextUnaware()

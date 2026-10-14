@@ -12,6 +12,11 @@ object KotlinErrorTrackerExample {
     val CONTEXT_AWARE: ErrorTracker = ErrorTracker.contextAware() // Filter expected noise before it is submitted
         .ignoreError(InvocationTargetException::class.java, "Expected .* but got .*")
         .ignoreError(AccessDeniedException::class.java)
+        // Optionally add custom error exclusion rules
+        // example: only track errors that pass your own package
+        .addExclusionRule { _, error ->
+            error.stackTrace.none { it.className.startsWith("your.package.name") }
+        }
 
     // Context-unaware: only tracks errors passed to trackError() manually
     val CONTEXT_UNAWARE: ErrorTracker =
