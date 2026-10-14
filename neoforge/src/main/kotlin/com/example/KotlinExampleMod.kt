@@ -14,6 +14,7 @@ class KotlinExampleMod {
         "example_mod",
         "YOUR_TOKEN_HERE",
     )
+        .requireConsent() // Require explicit user consent, this will open the consent screen on first start
         .metrics { factory ->
             factory
                 .addMetric(Metric.number("game_count") { gameCount.get() })

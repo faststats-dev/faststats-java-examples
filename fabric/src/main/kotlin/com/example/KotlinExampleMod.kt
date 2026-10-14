@@ -14,6 +14,7 @@ class KotlinExampleMod : ModInitializer {
         "YOUR_TOKEN_HERE",
     )
         // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
+        .requireConsent() // Require explicit user consent, this will open the consent screen on first start
         .metrics { factory ->
             factory
                 // Custom metrics require a corresponding data source in your project settings
