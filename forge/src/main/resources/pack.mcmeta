@@ -1,0 +1,9 @@
+{
+  "pack": {
+    "description": {
+      "text": "Example Mod resources"
+    },
+    "min_format": 32,
+    "max_format": 121
+  }
+}
