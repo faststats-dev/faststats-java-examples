@@ -9,7 +9,7 @@ tasks.compileJava {
 }
 
 dependencies {
-    compileOnly("net.fabricmc:fabric-loader:0.19.5")
+    compileOnly("net.fabricmc:fabric-loader:0.20.0")
     implementation("dev.faststats.metrics:fabric:0.31.0-pre2+mc26.3")
     include("dev.faststats.metrics:fabric:0.31.0-pre2+mc26.3")
     minecraft("com.mojang:minecraft:26.3")
