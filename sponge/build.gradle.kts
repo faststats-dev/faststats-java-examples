@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     compileOnly("org.spongepowered:spongeapi:8.3.0-SNAPSHOT")
-    implementation("dev.faststats.metrics:sponge:0.31.0-pre2")
+    implementation("dev.faststats.metrics:sponge:0.31.0-pre4")
 }
 
 tasks.shadowJar {
