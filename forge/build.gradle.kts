@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly(minecraftExtension.dependency("net.minecraftforge:forge:26.3-66.0.12"))
+    compileOnly(minecraftExtension.dependency("net.minecraftforge:forge:26.3-66.0.13"))
     implementation("dev.faststats.metrics:forge:0.31.0-pre4+mc26.3")
     jarJar.configurationName("dev.faststats.metrics:forge:0.31.0-pre4+mc26.3")
 }
