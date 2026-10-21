@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     compileOnly("net.md-5:bungeecord-api:26.1-R0.1-SNAPSHOT")
-    implementation("dev.faststats.metrics:bungeecord:0.31.0-pre4")
+    implementation("dev.faststats.metrics:bungeecord:0.31.0")
 }
 
 tasks.shadowJar {
