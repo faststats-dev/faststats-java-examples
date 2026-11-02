@@ -10,7 +10,7 @@ tasks.compileJava {
 
 dependencies {
     compileOnly("net.fabricmc:fabric-loader:0.20.1")
-    implementation("dev.faststats.metrics:fabric:0.31.0+mc26.3")
-    include("dev.faststats.metrics:fabric:0.31.0+mc26.3")
+    implementation("dev.faststats.metrics:fabric:0.31.0-pre4+mc26.3")
+    include("dev.faststats.metrics:fabric:0.31.0-pre4+mc26.3")
     minecraft("com.mojang:minecraft:26.3")
 }
