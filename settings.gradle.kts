@@ -9,6 +9,7 @@ plugins {
 }
 
 include("bukkit")
+include("build-token")
 include("bungeecord")
 include("core")
 include("fabric")
