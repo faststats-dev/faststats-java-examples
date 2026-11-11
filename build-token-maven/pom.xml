@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>build-token-maven</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <maven.compiler.release>25</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--
+            The FastStats token is injected at build time instead of being hardcoded in the source code.
+            This is not meant to hide the token (it is still readable in the jar), it keeps it out of the code
+            so forks of this repository don't send data to your FastStats project.
+
+            Lookup order:
+              1. -Dfaststats.token=... on the command line
+              2. faststats.token=... in a git-ignored faststats.properties file next to this pom.xml
+              3. FASTSTATS_TOKEN environment variable (e.g. a GitHub Actions repository secret)
+            Without a token the property stays empty and FastStats is disabled, the plugin keeps working.
+        -->
+        <faststats.token></faststats.token>
+    </properties>
+
+    <profiles>
+        <!-- CI: use the FASTSTATS_TOKEN environment variable when it is set -->
+        <profile>
+            <id>faststats-env</id>
+            <activation>
+                <property>
+                    <name>env.FASTSTATS_TOKEN</name>
+                </property>
+            </activation>
+            <properties>
+                <faststats.token>${env.FASTSTATS_TOKEN}</faststats.token>
+            </properties>
+        </profile>
+    </profiles>
+
+    <repositories>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>faststats</id>
+            <url>https://repo.faststats.dev/releases/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>26.3.build.248-stable</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.faststats.metrics</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>0.32.2</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <!--
+                Filter only the token file, so ${...} in other resources stays untouched.
+                If you already filter all resources, you don't need these two blocks.
+            -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>META-INF/faststats/*.token</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>META-INF/faststats/*.token</exclude>
+                </excludes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!-- Local builds: read faststats.token from a git-ignored faststats.properties file, if present -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${project.basedir}/faststats.properties</file>
+                            </files>
+                            <quiet>true</quiet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <relocations>
+                                <!-- optionally relocate faststats -->
+                                <relocation>
+                                    <pattern>dev.faststats</pattern>
+                                    <shadedPattern>com.example.utils.faststats</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

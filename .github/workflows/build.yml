@@ -25,3 +25,7 @@ jobs:
           # Written into the build-token example's resources at build time, see build-token/build.gradle.kts
           # Secrets are not available to pull requests from forks, those jars contain an empty token and run with FastStats disabled
           FASTSTATS_TOKEN: ${{ secrets.FASTSTATS_TOKEN }}
+      - name: Build Maven example
+        run: mvn -B -f build-token-maven/pom.xml package
+        env:
+          FASTSTATS_TOKEN: ${{ secrets.FASTSTATS_TOKEN }}
