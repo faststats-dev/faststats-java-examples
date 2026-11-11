@@ -5,5 +5,5 @@ tasks.compileJava {
 }
 
 dependencies {
-    implementation("dev.faststats.metrics:core:0.31.0")
+    implementation("dev.faststats.metrics:core:0.32.1")
 }

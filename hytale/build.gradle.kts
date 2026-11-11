@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     compileOnly("com.hypixel.hytale:Server:+")
-    implementation("dev.faststats.metrics:hytale:0.31.0")
+    implementation("dev.faststats.metrics:hytale:0.32.1")
 }
 
 tasks.shadowJar {
