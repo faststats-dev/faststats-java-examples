@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     compileOnly("cn.nukkit:nukkit:1.0-SNAPSHOT")
-    implementation("dev.faststats.metrics:nukkit:0.32.1")
+    implementation("dev.faststats.metrics:nukkit:0.32.2")
 }
 
 tasks.shadowJar {
