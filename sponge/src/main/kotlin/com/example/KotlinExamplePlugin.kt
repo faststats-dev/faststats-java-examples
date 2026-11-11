@@ -2,8 +2,9 @@ package com.example
 
 import com.google.inject.Inject
 import dev.faststats.ErrorTracker
+import dev.faststats.FastStatsContext
 import dev.faststats.data.Metric
-import dev.faststats.sponge.SpongeContext
+import dev.faststats.sponge.FastStatsSponge
 import org.spongepowered.api.Server
 import org.spongepowered.api.event.Listener
 import org.spongepowered.api.event.lifecycle.StartedEngineEvent
@@ -14,14 +15,14 @@ import java.util.concurrent.atomic.AtomicInteger
 @Plugin("example")
 class KotlinExamplePlugin {
     @Inject
-    private lateinit var contextBuilder: SpongeContext.Builder
+    private lateinit var contextBuilder: FastStatsSponge
+    private var context: FastStatsContext? = null
 
     private val gameCount = AtomicInteger()
-    private var context: SpongeContext? = null
 
     @Listener
     fun onServerStart(event: StartedEngineEvent<Server>) {
-        val context = contextBuilder
+        val context = contextBuilder.builder()
             .token("YOUR_TOKEN_HERE")
             .errorTrackerService(ERROR_TRACKER)
             // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
@@ -37,7 +38,7 @@ class KotlinExamplePlugin {
 
                     .create()
             }
-            .create()
+            .build()
         this.context = context
         context.ready() // start metrics and errors submission
     }

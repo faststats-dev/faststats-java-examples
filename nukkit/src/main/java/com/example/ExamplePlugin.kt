@@ -3,13 +3,14 @@ package com.example
 import cn.nukkit.plugin.PluginBase
 import dev.faststats.ErrorTracker
 import dev.faststats.data.Metric
-import dev.faststats.nukkit.NukkitContext
+import dev.faststats.nukkit.FastStatsNukkit
 import java.util.concurrent.atomic.AtomicInteger
 
 class KotlinExamplePlugin : PluginBase() {
     private val gameCount = AtomicInteger()
 
-    private val context = NukkitContext.Factory(this, "YOUR_TOKEN_HERE")
+    private val context = FastStatsNukkit.builder(this)
+        .token("YOUR_TOKEN_HERE")
         .errorTrackerService(ERROR_TRACKER)
         // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
         .metrics { factory ->
@@ -24,7 +25,7 @@ class KotlinExamplePlugin : PluginBase() {
 
                 .create()
         }
-        .create()
+        .build()
 
     override fun onEnable() {
         context.ready() // start metrics and errors submission

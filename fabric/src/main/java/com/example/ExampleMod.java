@@ -1,8 +1,9 @@
 package com.example;
 
 import dev.faststats.ErrorTracker;
+import dev.faststats.FastStatsContext;
 import dev.faststats.data.Metric;
-import dev.faststats.fabric.FabricContext;
+import dev.faststats.fabric.FastStatsFabric;
 import net.fabricmc.api.ModInitializer;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,10 +12,8 @@ public class ExampleMod implements ModInitializer {
     public static final ErrorTracker ERROR_TRACKER = ErrorTracker.contextAware();
     private final AtomicInteger gameCount = new AtomicInteger();
 
-    private final FabricContext context = new FabricContext.Factory(
-            "example-mod", // your mod id as defined in fabric.mod.json
-            "YOUR_TOKEN_HERE"
-    )
+    private final FastStatsContext context = FastStatsFabric.builder("example-mod") // your mod id as defined in fabric.mod.json
+            .token("YOUR_TOKEN_HERE")
             .requireConsent() // Require explicit user consent, this will open the consent screen on first start
             // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
             .metrics(factory -> factory
@@ -28,7 +27,7 @@ public class ExampleMod implements ModInitializer {
 
                     .create())
             .errorTrackerService(ERROR_TRACKER)
-            .create();
+            .build();
 
     @Override
     public void onInitialize() {

@@ -15,7 +15,7 @@ repositories {
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:4.3.1")
     annotationProcessor("com.velocitypowered:velocity-api:4.3.1")
-    implementation("dev.faststats.metrics:velocity:0.32.2")
+    implementation("dev.faststats.metrics:velocity:0.33.0")
 }
 
 tasks.shadowJar {

@@ -11,6 +11,6 @@ configurations.configureEach {
 }
 
 dependencies {
-    implementation("dev.faststats.metrics:neoforge:0.32.2+mc26.3")
-    jarJar("dev.faststats.metrics:neoforge:0.32.2+mc26.3")
+    implementation("dev.faststats.metrics:neoforge:0.33.0+mc26.3")
+    jarJar("dev.faststats.metrics:neoforge:0.33.0+mc26.3")
 }

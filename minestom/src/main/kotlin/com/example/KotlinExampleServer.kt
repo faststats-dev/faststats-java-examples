@@ -2,7 +2,7 @@ package com.example
 
 import dev.faststats.ErrorTracker
 import dev.faststats.data.Metric
-import dev.faststats.minestom.MinestomContext
+import dev.faststats.minestom.FastStatsMinestom
 import net.minestom.server.MinecraftServer
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -10,7 +10,8 @@ object KotlinExampleServer {
     val ERROR_TRACKER: ErrorTracker = ErrorTracker.contextAware()
     private val gameCount = AtomicInteger()
 
-    private val context = MinestomContext.Factory("YOUR_TOKEN_HERE")
+    private val context = FastStatsMinestom.builder()
+        .token("YOUR_TOKEN_HERE")
         .errorTrackerService(ERROR_TRACKER)
         // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
         .metrics { factory ->
@@ -25,7 +26,7 @@ object KotlinExampleServer {
 
                 .create()
         }
-        .create()
+        .build()
 
     @JvmStatic
     fun main(args: Array<String>) {

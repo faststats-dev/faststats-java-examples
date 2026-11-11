@@ -2,8 +2,9 @@ package com.example;
 
 import cn.nukkit.plugin.PluginBase;
 import dev.faststats.ErrorTracker;
+import dev.faststats.FastStatsContext;
 import dev.faststats.data.Metric;
-import dev.faststats.nukkit.NukkitContext;
+import dev.faststats.nukkit.FastStatsNukkit;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -11,11 +12,12 @@ public final class ExamplePlugin extends PluginBase {
     public static final ErrorTracker ERROR_TRACKER = ErrorTracker.contextAware();
     private final AtomicInteger gameCount = new AtomicInteger();
 
-    private NukkitContext context;
+    private FastStatsContext context;
 
     @Override
     public void onLoad() {
-        context = new NukkitContext.Factory(this, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        context = FastStatsNukkit.builder(this)
+                .token("YOUR_TOKEN_HERE")
                 .errorTrackerService(ERROR_TRACKER)
                 // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
                 .metrics(factory -> factory
@@ -28,7 +30,7 @@ public final class ExamplePlugin extends PluginBase {
                         .onFlush(() -> gameCount.set(0)) // reset game count on flush
 
                         .create())
-                .create();
+                .build();
     }
 
     @Override

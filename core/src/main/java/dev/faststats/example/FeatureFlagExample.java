@@ -18,7 +18,7 @@ public final class FeatureFlagExample {
                             .put("java_vendor", System.getProperty("java.vendor")))
                     .ttl(Duration.ofMinutes(10)) // Custom cache TTL for resolved flag values
                     .create())
-            .create();
+            .build();
 
     public static final FeatureFlagService SERVICE = CONTEXT.featureFlagService().orElseThrow();
 
@@ -68,7 +68,7 @@ public final class FeatureFlagExample {
         });
     }
 
-    private static SimpleContext.Factory<?, ?> getContextFactory() {
+    private static SimpleContext.Builder getContextFactory() {
         return null;
     }
 }
