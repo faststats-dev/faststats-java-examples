@@ -29,7 +29,7 @@ object KotlinErrorTrackerExample {
 
     val CONTEXT: FastStatsContext = contextFactory
         .errorTrackerService(CONTEXT_AWARE) // Set the global/internal error tracker
-        .create()
+        .build()
 
     init {
         // Attributes on the global error tracker are attached to all reports
@@ -60,6 +60,6 @@ object KotlinErrorTrackerExample {
         }
     }
 
-    private val contextFactory: SimpleContext.Factory<*, *>
+    private val contextFactory: SimpleContext.Builder
         get() = throw UnsupportedOperationException()
 }

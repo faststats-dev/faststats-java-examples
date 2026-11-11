@@ -6,8 +6,9 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import dev.faststats.ErrorTracker;
+import dev.faststats.FastStatsContext;
 import dev.faststats.data.Metric;
-import dev.faststats.velocity.VelocityContext;
+import dev.faststats.velocity.FastStatsVelocity;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,11 +18,11 @@ public class ExamplePlugin {
     public static final ErrorTracker ERROR_TRACKER = ErrorTracker.contextAware();
     private final AtomicInteger gameCount = new AtomicInteger();
 
-    private final VelocityContext context;
+    private final FastStatsContext context;
 
     @Inject
-    public ExamplePlugin(final VelocityContext.Builder contextBuilder) {
-        this.context = contextBuilder
+    public ExamplePlugin(final FastStatsVelocity contextBuilder) {
+        this.context = contextBuilder.builder()
                 .token("YOUR_TOKEN_HERE")
                 .errorTrackerService(ERROR_TRACKER)
                 // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
@@ -35,7 +36,7 @@ public class ExamplePlugin {
                         .onFlush(() -> gameCount.set(0)) // reset game count on flush
 
                         .create())
-                .create();
+                .build();
     }
 
     @Subscribe

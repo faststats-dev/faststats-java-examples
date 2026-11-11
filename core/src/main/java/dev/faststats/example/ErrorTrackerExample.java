@@ -31,7 +31,7 @@ public final class ErrorTrackerExample {
 
     public static final FastStatsContext CONTEXT = getContextFactory()
             .errorTrackerService(CONTEXT_AWARE) // Set the global/internal error tracker
-            .create();
+            .build();
 
     static {
         // Attributes on the global error tracker are attached to all reports
@@ -62,7 +62,7 @@ public final class ErrorTrackerExample {
         }
     }
 
-    private static SimpleContext.Factory<?, ?> getContextFactory() {
+    private static SimpleContext.Builder getContextFactory() {
         return null;
     }
 }
