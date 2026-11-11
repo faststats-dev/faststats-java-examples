@@ -22,10 +22,12 @@ dependencies {
 // so forks of this repository don't send data to your FastStats project.
 // Lookup order:
 //   1. FASTSTATS_TOKEN environment variable (e.g. a GitHub Actions repository secret)
-//   2. faststats.token Gradle property (e.g. in ~/.gradle/gradle.properties or -Pfaststats.token=...)
+//   2. faststats.token Gradle property (-Pfaststats.token=...)
+//   3. faststats.token file in the project directory (git-ignored, one token per project for local builds)
 // Never put the token in the project's own gradle.properties, as that file is committed.
 val faststatsToken = providers.environmentVariable("FASTSTATS_TOKEN")
     .orElse(providers.gradleProperty("faststats.token"))
+    .orElse(providers.fileContents(layout.projectDirectory.file("faststats.token")).asText.map { it.trim() })
     .orElse("")
 
 tasks.processResources {
