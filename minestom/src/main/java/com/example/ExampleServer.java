@@ -1,8 +1,9 @@
 package com.example;
 
 import dev.faststats.ErrorTracker;
+import dev.faststats.FastStatsContext;
 import dev.faststats.data.Metric;
-import dev.faststats.minestom.MinestomContext;
+import dev.faststats.minestom.FastStatsMinestom;
 import net.minestom.server.MinecraftServer;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,7 +12,8 @@ public final class ExampleServer {
     public static final ErrorTracker ERROR_TRACKER = ErrorTracker.contextAware();
     private static final AtomicInteger gameCount = new AtomicInteger();
 
-    private static final MinestomContext context = new MinestomContext.Factory("YOUR_TOKEN_HERE")
+    private static final FastStatsContext context = FastStatsMinestom.builder()
+            .token("YOUR_TOKEN_HERE")
             .errorTrackerService(ERROR_TRACKER)
             // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
             .metrics(factory -> factory
@@ -24,7 +26,7 @@ public final class ExampleServer {
                     .onFlush(() -> gameCount.set(0)) // reset game count on flush
 
                     .create())
-            .create();
+            .build();
 
     public static void main(final String[] args) {
         final var server = MinecraftServer.init();

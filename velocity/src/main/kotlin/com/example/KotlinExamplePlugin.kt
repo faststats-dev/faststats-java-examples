@@ -7,7 +7,7 @@ import com.velocitypowered.api.event.proxy.ProxyShutdownEvent
 import com.velocitypowered.api.plugin.Plugin
 import dev.faststats.ErrorTracker
 import dev.faststats.data.Metric
-import dev.faststats.velocity.VelocityContext
+import dev.faststats.velocity.FastStatsVelocity
 import java.util.concurrent.atomic.AtomicInteger
 
 @Plugin(
@@ -17,10 +17,10 @@ import java.util.concurrent.atomic.AtomicInteger
     url = "https://example.com",
     authors = ["Your Name"],
 )
-class KotlinExamplePlugin @Inject constructor(contextBuilder: VelocityContext.Builder) {
+class KotlinExamplePlugin @Inject constructor(contextBuilder: FastStatsVelocity) {
     private val gameCount = AtomicInteger()
 
-    private val context = contextBuilder
+    private val context = contextBuilder.builder()
         .token("YOUR_TOKEN_HERE")
         .errorTrackerService(ERROR_TRACKER)
         // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
@@ -36,7 +36,7 @@ class KotlinExamplePlugin @Inject constructor(contextBuilder: VelocityContext.Bu
 
                 .create()
         }
-        .create()
+        .build()
 
     @Subscribe
     fun onProxyInitialize(event: ProxyInitializeEvent) {

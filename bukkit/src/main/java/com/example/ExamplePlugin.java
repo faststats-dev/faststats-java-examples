@@ -1,7 +1,8 @@
 package com.example;
 
 import dev.faststats.ErrorTracker;
-import dev.faststats.bukkit.BukkitContext;
+import dev.faststats.FastStatsContext;
+import dev.faststats.bukkit.FastStatsBukkit;
 import dev.faststats.data.Metric;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,7 +12,8 @@ public final class ExamplePlugin extends JavaPlugin {
     public static final ErrorTracker ERROR_TRACKER = ErrorTracker.contextAware();
     private final AtomicInteger gameCount = new AtomicInteger();
 
-    private final BukkitContext context = new BukkitContext.Factory(this, "YOUR_TOKEN_HERE")
+    private final FastStatsContext context = FastStatsBukkit.builder(this)
+            .token("YOUR_TOKEN_HERE")
             .errorTrackerService(ERROR_TRACKER)
             // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
             .metrics(factory -> factory
@@ -24,7 +26,7 @@ public final class ExamplePlugin extends JavaPlugin {
                     .onFlush(() -> gameCount.set(0)) // reset game count on flush
 
                     .create())
-            .create();
+            .build();
 
     @Override
     public void onEnable() {

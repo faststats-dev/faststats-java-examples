@@ -1,8 +1,9 @@
 package com.example;
 
 import dev.faststats.ErrorTracker;
+import dev.faststats.FastStatsContext;
 import dev.faststats.data.Metric;
-import dev.faststats.forge.ForgeContext;
+import dev.faststats.forge.FastStatsForge;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,10 +13,8 @@ public final class ExampleMod {
     public static final ErrorTracker ERROR_TRACKER = ErrorTracker.contextAware();
     private final AtomicInteger gameCount = new AtomicInteger();
 
-    private final ForgeContext context = new ForgeContext.Factory(
-            "example_mod",
-            "YOUR_TOKEN_HERE"
-    )
+    private final FastStatsContext context = FastStatsForge.builder("example_mod")
+            .token("YOUR_TOKEN_HERE")
             .requireConsent() // Require explicit user consent, this will open the consent screen on first start
             .metrics(factory -> factory
                     .addMetric(Metric.number("game_count", gameCount::get))
@@ -23,7 +22,7 @@ public final class ExampleMod {
                     .onFlush(() -> gameCount.set(0))
                     .create())
             .errorTrackerService(ERROR_TRACKER)
-            .create();
+            .build();
 
     public void startGame() {
         gameCount.incrementAndGet();

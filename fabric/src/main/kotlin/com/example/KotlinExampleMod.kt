@@ -2,17 +2,15 @@ package com.example
 
 import dev.faststats.ErrorTracker
 import dev.faststats.data.Metric
-import dev.faststats.fabric.FabricContext
+import dev.faststats.fabric.FastStatsFabric
 import net.fabricmc.api.ModInitializer
 import java.util.concurrent.atomic.AtomicInteger
 
 class KotlinExampleMod : ModInitializer {
     private val gameCount = AtomicInteger()
 
-    private val context = FabricContext.Factory(
-        "example-mod", // your mod id as defined in fabric.mod.json
-        "YOUR_TOKEN_HERE",
-    )
+    private val context = FastStatsFabric.builder("example-mod") // your mod id as defined in fabric.mod.json
+        .token("YOUR_TOKEN_HERE")
         // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
         .requireConsent() // Require explicit user consent, this will open the consent screen on first start
         .metrics { factory ->
@@ -28,7 +26,7 @@ class KotlinExampleMod : ModInitializer {
                 .create()
         }
         .errorTrackerService(ERROR_TRACKER)
-        .create()
+        .build()
 
     override fun onInitialize() {
         // your actual logic
