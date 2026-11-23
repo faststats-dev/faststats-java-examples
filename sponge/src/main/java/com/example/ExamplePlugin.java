@@ -2,8 +2,9 @@ package com.example;
 
 import com.google.inject.Inject;
 import dev.faststats.ErrorTracker;
+import dev.faststats.FastStatsContext;
 import dev.faststats.data.Metric;
-import dev.faststats.sponge.SpongeContext;
+import dev.faststats.sponge.FastStatsSponge;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.event.Listener;
@@ -16,14 +17,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Plugin("example")
 public class ExamplePlugin {
     public static final ErrorTracker ERROR_TRACKER = ErrorTracker.contextAware();
-    private @Inject SpongeContext.Builder contextBuilder;
+    private @Inject FastStatsSponge contextBuilder;
+    private @Nullable FastStatsContext context = null;
 
     private final AtomicInteger gameCount = new AtomicInteger();
-    private @Nullable SpongeContext context = null;
 
     @Listener
     public void onServerStart(final StartedEngineEvent<Server> event) {
-        this.context = contextBuilder
+        this.context = contextBuilder.builder()
                 .token("YOUR_TOKEN_HERE")
                 .errorTrackerService(ERROR_TRACKER)
                 // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
@@ -37,7 +38,7 @@ public class ExamplePlugin {
                         .onFlush(() -> gameCount.set(0)) // reset game count on flush
 
                         .create())
-                .create();
+                .build();
         context.ready(); // start metrics and errors submission
     }
 

@@ -2,7 +2,7 @@ package com.example
 
 import dev.faststats.ErrorTracker
 import dev.faststats.data.Metric
-import dev.faststats.neoforge.NeoForgeContext
+import dev.faststats.neoforge.FastStatsNeoForge
 import net.neoforged.fml.common.Mod
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -10,10 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger
 class KotlinExampleMod {
     private val gameCount = AtomicInteger()
 
-    private val context = NeoForgeContext.Factory(
-        "example_mod",
-        "YOUR_TOKEN_HERE",
-    )
+    private val context = FastStatsNeoForge.builder("example-mod") // your mod id as defined in fabric.mod.json
+        .token("YOUR_TOKEN_HERE")
         .requireConsent() // Require explicit user consent, this will open the consent screen on first start
         .metrics { factory ->
             factory
@@ -23,7 +21,7 @@ class KotlinExampleMod {
                 .create()
         }
         .errorTrackerService(ERROR_TRACKER)
-        .create()
+        .build()
 
     fun startGame() {
         gameCount.incrementAndGet()

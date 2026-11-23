@@ -1,7 +1,8 @@
 package com.example;
 
 import dev.faststats.ErrorTracker;
-import dev.faststats.bungee.BungeeContext;
+import dev.faststats.FastStatsContext;
+import dev.faststats.bungee.FastStatsBungee;
 import dev.faststats.data.Metric;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -11,7 +12,8 @@ public class ExamplePlugin extends Plugin {
     public static final ErrorTracker ERROR_TRACKER = ErrorTracker.contextAware();
     private final AtomicInteger gameCount = new AtomicInteger();
 
-    private final BungeeContext context = new BungeeContext.Factory(this, "YOUR_TOKEN_HERE")
+    private final FastStatsContext context = FastStatsBungee.builder(this)
+            .token("YOUR_TOKEN_HERE")
             .errorTrackerService(ERROR_TRACKER)
             // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
             .metrics(factory -> factory
@@ -24,7 +26,7 @@ public class ExamplePlugin extends Plugin {
                     .onFlush(() -> gameCount.set(0)) // reset game count on flush
 
                     .create())
-            .create();
+            .build();
 
     @Override
     public void onEnable() {

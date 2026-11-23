@@ -17,7 +17,7 @@ object KotlinFeatureFlagExample {
                 )
                 .ttl(Duration.ofMinutes(10)) // Custom cache TTL for resolved flag values
                 .create()
-        }.create()
+        }.build()
 
     val SERVICE: FeatureFlagService = CONTEXT.featureFlagService().orElseThrow()
 
@@ -60,6 +60,6 @@ object KotlinFeatureFlagExample {
         })
     }
 
-    private val contextFactory: SimpleContext.Factory<*, *>
+    private val contextFactory: SimpleContext.Builder
         get() = throw UnsupportedOperationException()
 }

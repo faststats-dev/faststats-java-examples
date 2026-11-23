@@ -4,13 +4,14 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit
 import dev.faststats.ErrorTracker
 import dev.faststats.data.Metric
-import dev.faststats.hytale.HytaleContext
+import dev.faststats.hytale.FastStatsHytale
 import java.util.concurrent.atomic.AtomicInteger
 
 class KotlinExamplePlugin(init: JavaPluginInit) : JavaPlugin(init) {
     private val gameCount = AtomicInteger()
 
-    private val context = HytaleContext.Factory(this, "YOUR_TOKEN_HERE")
+    private val context = FastStatsHytale.builder(this)
+        .token("YOUR_TOKEN_HERE")
         .errorTrackerService(ERROR_TRACKER)
         // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
         .metrics { factory ->
@@ -25,7 +26,7 @@ class KotlinExamplePlugin(init: JavaPluginInit) : JavaPlugin(init) {
 
                 .create()
         }
-        .create()
+        .build()
 
     override fun setup() {
         context.ready() // start metrics and errors submission

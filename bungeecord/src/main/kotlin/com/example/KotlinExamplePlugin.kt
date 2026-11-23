@@ -1,7 +1,7 @@
 package com.example
 
 import dev.faststats.ErrorTracker
-import dev.faststats.bungee.BungeeContext
+import dev.faststats.bungee.FastStatsBungee
 import dev.faststats.data.Metric
 import net.md_5.bungee.api.plugin.Plugin
 import java.util.concurrent.atomic.AtomicInteger
@@ -9,7 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger
 class KotlinExamplePlugin : Plugin() {
     private val gameCount = AtomicInteger()
 
-    private val context = BungeeContext.Factory(this, "YOUR_TOKEN_HERE")
+    private val context = FastStatsBungee.builder(this)
+        .token("YOUR_TOKEN_HERE")
         .errorTrackerService(ERROR_TRACKER)
         // .metrics(Metrics.Factory::create) // Define a minimal metrics instance without any custom metrics
         .metrics { factory ->
@@ -24,7 +25,7 @@ class KotlinExamplePlugin : Plugin() {
 
                 .create()
         }
-        .create()
+        .build()
 
     override fun onEnable() {
         context.ready() // start metrics and errors submission
