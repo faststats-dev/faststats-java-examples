@@ -62,7 +62,7 @@
         <dependency>
             <groupId>dev.faststats.metrics</groupId>
             <artifactId>bukkit</artifactId>
-            <version>0.32.2</version>
+            <version>0.33.0</version>
         </dependency>
     </dependencies>
 
