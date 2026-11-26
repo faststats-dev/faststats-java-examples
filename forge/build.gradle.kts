@@ -3,7 +3,7 @@ import net.minecraftforge.gradle.MinecraftExtensionForProject
 import net.minecraftforge.jarjar.gradle.JarJarExtension
 
 plugins {
-    id("net.minecraftforge.gradle") version "7.0.40"
+    id("net.minecraftforge.gradle") version "7.0.41"
     id("net.minecraftforge.jarjar") version "0.2.3"
 }
 
